@@ -8,6 +8,9 @@
         <header>
             <section id="index-header">
                 <h1>My Bangs</h1>
+                <button id="save-btn">
+                    Save changes
+                </button>
             </section>
             <div id="index-hr"></div>
         </header>
@@ -31,6 +34,27 @@
             font-size: 1.5rem; /* 24px */
             line-height: 2rem; /* 32px */
         }
+
+        #save-btn {
+            background-color: #006600;
+            padding: 5px 15px;
+            border-radius: 0.125rem;
+            cursor: pointer;
+        }
+
+        #save-btn:hover {
+            background-color: #009900;
+        }
+
+        #save-btn:disabled {
+            background-color: #666666;
+            color: #c9c9c9;
+        }
+        
+        #save-btn:disabled:hover {
+            background-color: #838383;
+        }
+
         #index-hr {
             border: 0.5px solid #838383;
         }
