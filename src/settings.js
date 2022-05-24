@@ -51,5 +51,5 @@ const loadLists = ( hostnames, bangs ) => {
 }
 
 
-/** load necessary data */
+/** run on page load */
 window.onload = ( event ) => route( 0 ); // start at index.html
