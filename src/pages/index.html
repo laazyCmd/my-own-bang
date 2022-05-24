@@ -54,6 +54,13 @@
                             <h6>https://piped.kavin.rocks/results?search_query={{s}}</h6>
                         </section>
                     </div>
+                    <div class="list-entry">
+                        <input type="checkbox">
+                        <section class="bang">
+                            <label class="bang-name">!libreddits</label>
+                            <h6>http://libredd.it/r/{{s}}</h6>
+                        </section>
+                    </div>
                 </section>
             </details>
         </div>
@@ -98,7 +105,10 @@
         }
 
         .list {
+            display: flex;
+            flex-direction: column;
             margin: 1rem 0;
+            row-gap: 8px;
         }
 
         .list-entry {
