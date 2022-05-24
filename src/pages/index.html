@@ -20,11 +20,11 @@
                 </section>
                 <div class="summary-hr"></div>
             </summary>
-            <section class="list">
-                <div class="list-entry">
+            <section id="hostname-list">
+                <div class="hostname-entry">
                     <input type="checkbox">
                     <section class="hostname">
-                        <label class="hostname-name">DuckDuckGo</label>
+                        <label class="hostname-name">%hostname-name%</label>
                     </section>
                 </div>
             </section>
@@ -46,19 +46,12 @@
                     </section>
                     <div class="summary-hr"></div>
                 </summary>
-                <section class="list">
-                    <div class="list-entry">
+                <section id="bang-list">
+                    <div class="bang-entry">
                         <input type="checkbox">
                         <section class="bang">
-                            <label class="bang-name">!piped</label>
-                            <h6>https://piped.kavin.rocks/results?search_query={{s}}</h6>
-                        </section>
-                    </div>
-                    <div class="list-entry">
-                        <input type="checkbox">
-                        <section class="bang">
-                            <label class="bang-name">!libreddits</label>
-                            <h6>http://libredd.it/r/{{s}}</h6>
+                            <label class="bang-name">%bang_name%</label>
+                            <h6 class="bang-url">%bang_url%</h6>
                         </section>
                     </div>
                 </section>
@@ -104,14 +97,16 @@
             line-height: 1rem; /* 16px */
         }
 
-        .list {
+        #hostname-list,
+        #bang-list {
             display: flex;
             flex-direction: column;
             margin: 1rem 0;
             row-gap: 8px;
         }
 
-        .list-entry {
+        .hostname-entry,
+        .bang-entry {
             padding: 0 1rem;
             display: flex;
             border-left: 1rem solid #de5833;
@@ -120,7 +115,8 @@
             align-items: center;
         }
 
-        .list-entry input[type="checkbox"] {
+        .hostname-entry input[type="checkbox"],
+        .bang-entry input[type="checkbox"] {
             width: 1.25rem;
             height: 1.25rem;
             cursor: pointer;
@@ -130,10 +126,11 @@
             justify-items: center;
         }
 
-        .list-entry input[type="checkbox"]:checked:before {
+        .hostname-entry input[type="checkbox"]:checked:before, 
+        .bang-entry input[type="checkbox"]:checked:before {
             margin: auto;
             color: black;
-            content: '✔';
+            content: '✖';
         }
 
         .summary-hr {
