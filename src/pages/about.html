@@ -5,18 +5,27 @@
     </head>
 
     <body id="about">
-        <header>
-            <section id="about-header">
-                <h1>About</h1>
+        <div id="about-info">
+            <header>
+                <section id="about-header">
+                    <h1>About</h1>
+                </section>
+                <div id="about-hr"></div>
+            </header>
+            <section id="about-bangs">
+                <p>TEST</p>
             </section>
-            <div id="about-hr"></div>
-        </header>
-        <section id="about-bangs">
-            <p>TEST</p>
-        </section>
+        </div>
+
     </body>
 
     <style>
+        #about-info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+        }
+
         #about-header {
             display: flex;
             justify-content: space-between;
@@ -31,6 +40,7 @@
             font-size: 1.5rem; /* 24px */
             line-height: 2rem; /* 32px */
         }
+
         #about-hr {
             border: 0.5px solid #838383;
         }
