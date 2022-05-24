@@ -5,22 +5,113 @@
     </head>
 
     <body id="index">
-        <header>
-            <section id="index-header">
-                <h1>My Bangs</h1>
-                <button id="save-btn">
-                    Save changes
-                </button>
+        <details id="hostnames-list" open>
+            <summary>
+                <section class="details-summary">
+                    <h1>Hostnames</h1>
+                    <div>
+                        <button class="rem-btn" disabled>
+                            Remove selected
+                        </button>
+                        <button class="add-btn">
+                            Add hostnames
+                        </button>
+                    </div>
+                </section>
+                <div class="summary-hr"></div>
+            </summary>
+            <section id="hostnames">
+                <div>
+                    <label class="hostname-name">DuckDuckGo</label>
+                </div>
             </section>
-            <div id="index-hr"></div>
-        </header>
-        <section id="index-bangs">
-            <p>asdasdasd</p>
-        </section>
+        </details>
+        
+        <div id="index-bangs">
+            <details id="bangs-list" open>
+                <summary>
+                    <section class="details-summary">
+                        <h1>Bangs</h1>
+                        <div>
+                            <button class="rem-btn" disabled>
+                                Remove selected
+                            </button>
+                            <button class="add-btn">
+                                Add bangs
+                            </button>
+                        </div>
+                    </section>
+                    <div class="summary-hr"></div>
+                </summary>
+                <section id="bangs">
+                    <div>
+                        <section class="bang-header">
+                            <label class="bang-name">!piped</label>
+                            <h6>https://piped.kavin.rocks/results?search_query={{s}}</h6>
+                        </section>
+                    </div>
+                </section>
+            </details>
+        </div>
     </body>
 
     <style>
-        #index-header {
+        /** TODO: decide wheter or not to combine some CSS styles as one */
+        #hostnames-list {
+            list-style-type: none;
+        }
+
+        #hostnames {
+            margin: 1rem 0;
+        }
+
+        #hostnames > div {
+            display: flex;
+            border-left: 1rem solid #de5833;
+            border-radius: 0.25rem;
+            background-color: #c04c2d;
+            overflow-x: hidden;
+        }
+
+        .hostname-name {
+            padding: 1rem;
+        }
+
+        #bangs-list {
+            list-style-type: none;
+        }
+
+        #bangs {
+            margin: 1rem 0;
+        }
+
+        #bangs > div {
+            display: flex;
+            border-left: 1rem solid #de5833;
+            border-radius: 0.25rem;
+            background-color: #c04c2d;
+        }
+
+        .bang-header {
+            margin: 1rem;
+            display: flex;
+            flex-direction: column;
+            row-gap: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .bang-header > h6 {
+            font-size: 0.75rem; /* 12px */
+            line-height: 1rem; /* 16px */
+        }
+
+        .summary-hr {
+            border: 0.5px solid #838383;
+        }
+
+        .details-summary {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -29,34 +120,41 @@
             margin-bottom: 0.75rem;
         }
         
-        #index-header > h1 {
+        .details-summary > h1 {
             font-weight: 600;
             font-size: 1.5rem; /* 24px */
             line-height: 2rem; /* 32px */
         }
 
-        #save-btn {
+        .add-btn {
             background-color: #006600;
             padding: 5px 15px;
             border-radius: 0.125rem;
             cursor: pointer;
         }
 
-        #save-btn:hover {
+        .add-btn:hover {
             background-color: #009900;
         }
 
-        #save-btn:disabled {
+        .rem-btn {
+            background-color: #990000;
+            padding: 5px 15px;
+            border-radius: 0.125rem;
+            cursor: pointer;
+        }
+
+        .rem-btn:hover {
+            background-color: #cc3300;
+        }
+
+        .rem-btn:disabled {
             background-color: #666666;
             color: #c9c9c9;
         }
         
-        #save-btn:disabled:hover {
+        .rem-btn:disabled:hover {
             background-color: #838383;
-        }
-
-        #index-hr {
-            border: 0.5px solid #838383;
         }
     </style>
 </html>
