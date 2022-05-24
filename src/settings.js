@@ -1,24 +1,8 @@
 /**
- *  Page routing
+ *  Saving/data lists
  */
-
-const routes = [
-    "pages/index.html",
-    "pages/about.html"
-];
-
-const route = ( index ) => {
-    const route = routes[ index ] || routes[ 0 ];
-    const request = new XMLHttpRequest();
-    
-    request.open( 'GET', route );
-    request.send();
-    request.onload = () => {
-        document.getElementById( "page" ).innerHTML = request.response
-    };
+ const test = async () => {
+    await browser.storage.local.get().then( items => console.log( items ) );
 };
 
-window.onload = ( event ) => route( 0 );
-
-document.getElementById( "bangs-btn" ).addEventListener( "click", () => route( 0 ) );
-document.getElementById( "about-btn" ).addEventListener( "click", () => route( 1 ) );
+test();
