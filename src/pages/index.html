@@ -20,9 +20,12 @@
                 </section>
                 <div class="summary-hr"></div>
             </summary>
-            <section id="hostnames">
-                <div>
-                    <label class="hostname-name">DuckDuckGo</label>
+            <section class="list">
+                <div class="list-entry">
+                    <input type="checkbox">
+                    <section class="hostname">
+                        <label class="hostname-name">DuckDuckGo</label>
+                    </section>
                 </div>
             </section>
         </details>
@@ -43,9 +46,10 @@
                     </section>
                     <div class="summary-hr"></div>
                 </summary>
-                <section id="bangs">
-                    <div>
-                        <section class="bang-header">
+                <section class="list">
+                    <div class="list-entry">
+                        <input type="checkbox">
+                        <section class="bang">
                             <label class="bang-name">!piped</label>
                             <h6>https://piped.kavin.rocks/results?search_query={{s}}</h6>
                         </section>
@@ -61,38 +65,24 @@
             list-style-type: none;
         }
 
-        #hostnames {
+        .hostname {
             margin: 1rem 0;
-        }
-
-        #hostnames > div {
             display: flex;
-            border-left: 1rem solid #de5833;
-            border-radius: 0.25rem;
-            background-color: #c04c2d;
-            overflow-x: hidden;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            align-items: center;
         }
 
         .hostname-name {
-            padding: 1rem;
+            padding: 0 1rem;
         }
 
         #bangs-list {
             list-style-type: none;
         }
 
-        #bangs {
-            margin: 1rem 0;
-        }
-
-        #bangs > div {
-            display: flex;
-            border-left: 1rem solid #de5833;
-            border-radius: 0.25rem;
-            background-color: #c04c2d;
-        }
-
-        .bang-header {
+        .bang {
             margin: 1rem;
             display: flex;
             flex-direction: column;
@@ -102,9 +92,38 @@
             white-space: nowrap;
         }
 
-        .bang-header > h6 {
+        .bang > h6 {
             font-size: 0.75rem; /* 12px */
             line-height: 1rem; /* 16px */
+        }
+
+        .list {
+            margin: 1rem 0;
+        }
+
+        .list-entry {
+            padding: 0 1rem;
+            display: flex;
+            border-left: 1rem solid #de5833;
+            border-radius: 0.25rem;
+            background-color: #c04c2d;
+            align-items: center;
+        }
+
+        .list-entry input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            background-color:white;
+            border-radius: 0.125rem; /* 2px */
+            display: flex;
+            justify-items: center;
+        }
+
+        .list-entry input[type="checkbox"]:checked:before {
+            margin: auto;
+            color: black;
+            content: '✔';
         }
 
         .summary-hr {
