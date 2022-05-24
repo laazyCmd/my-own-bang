@@ -72,12 +72,28 @@
             height: 100%;
         }
 
-        #page {
-            margin-left: 25%;
-            margin-right: 25%;
+        /** Small screens */
+        @media (min-width: 640px) {
+            #page {
+            margin-left: 10rem;
+            margin-right: 10rem;
+            height: 45rem;
+            margin-bottom: 2rem;
             display: flex;
             flex-direction: column;
-            row-gap: 1.5rem;
+            row-gap: 3.5rem;
+        }
+
+        /** Large screens */
+        @media (min-width: 1024px) {
+            #page {
+            margin-left: 35rem;
+            margin-right: 35rem;
+            height: 45rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            row-gap: 3.5rem;
         }
     </style>
 </html>
