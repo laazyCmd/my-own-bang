@@ -22,7 +22,7 @@ const checkBang = ( details ) => {
     } );
 };
 
-function navigateToBang( address, query ) {
+const navigateToBang = ( address, query ) => {
     browser.tabs.update( { url: address.replace( "{{s}}", query ) } );
 }
 
