@@ -5,7 +5,7 @@
     </head>
 
     <body id="index">
-        <details id="hostnames-list">
+        <details id="hostnames-list" open>
             <summary>
                 <section class="details-summary">
                     <h1>Hostnames</h1>
@@ -24,14 +24,14 @@
                 <div class="hostname-entry">
                     <input type="checkbox">
                     <section class="hostname">
-                        <label class="hostname-name">%hostname-name%</label>
+                        <span contenteditable="true">%hostname%</span>
                     </section>
                 </div>
             </section>
         </details>
         
         <div id="index-bangs">
-            <details id="bangs-list">
+            <details id="bangs-list" open>
                 <summary>
                     <section class="details-summary">
                         <h1>Bangs</h1>
@@ -50,8 +50,8 @@
                     <div class="bang-entry">
                         <input type="checkbox">
                         <section class="bang">
-                            <label class="bang-name">%bang_name%</label>
-                            <h6 class="bang-url">%bang_url%</h6>
+                            <span contenteditable="true">%bang%</span>
+                            <span class="bang-url "contenteditable="true">%bang_url%</span>
                         </section>
                     </div>
                 </section>
@@ -61,40 +61,9 @@
 
     <style>
         /** TODO: decide wheter or not to combine some CSS styles as one */
-        #hostnames-list {
-            list-style-type: none;
-        }
-
-        .hostname {
-            margin: 1rem 0;
-            display: flex;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            align-items: center;
-        }
-
-        .hostname-name {
-            padding: 0 1rem;
-        }
-
+        #hostnames-list,
         #bangs-list {
             list-style-type: none;
-        }
-
-        .bang {
-            margin: 1rem;
-            display: flex;
-            flex-direction: column;
-            row-gap: 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .bang > h6 {
-            font-size: 0.75rem; /* 12px */
-            line-height: 1rem; /* 16px */
         }
 
         #hostname-list,
@@ -131,6 +100,22 @@
             margin: auto;
             color: black;
             content: '✖';
+        }
+
+        .hostname,
+        .bang {
+            margin: 1rem;
+            display: flex;
+            flex-direction: column;
+            row-gap: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .bang-url {
+            font-size: 0.875rem; /* 14px */
+            line-height: 1.25rem; /* 20px */
         }
 
         .summary-hr {
