@@ -12,7 +12,7 @@ const route = ( index ) => {
     request.send();
     request.onload = () => {
         document.getElementById( "page" ).innerHTML = request.response;
-        if ( index === 0 ) 
+        if ( index === 0 )
             browser.storage.local.get( [ "hostnames", "bangs" ] )
             .then( data => loadLists( data.hostnames, data.bangs ) );
     };
@@ -25,8 +25,8 @@ document.getElementById( "about-btn" ).addEventListener( "click", () => route( 1
 /** show data inside respective lists */
 const loadLists = ( hostnames, bangs ) => {
     // templates
-    const hostname_template = document.getElementsByClassName( "hostname-entry" )[0].cloneNode( true );
-    const bang_template = document.getElementsByClassName( "bang-entry" )[0].cloneNode( true );
+    const hostname = document.getElementsByClassName( "hostname-entry" )[0].cloneNode( true );
+    const bang = document.getElementsByClassName( "bang-entry" )[0].cloneNode( true );
 
     // clear templates
     document.getElementsByClassName( "hostname-entry" )[0].remove();
@@ -34,19 +34,17 @@ const loadLists = ( hostnames, bangs ) => {
 
     // load hostnames
     hostnames.forEach( ( value, index ) => {
-        const hostname = hostname_template.cloneNode( true );
-
-        document.getElementById( "hostname-list" ).appendChild( hostname );
-        document.getElementsByClassName( "hostname-name" )[ index ].innerHTML = value;
+        document.getElementById( "hostname-list" ).appendChild( hostname.cloneNode( true ) );
+        document.getElementsByClassName( "hostname" )[ index ].getElementsByTagName( "span" )[0].innerHTML = value;
     } );
 
     // load bangs
     Object.entries( bangs ).forEach( ( pairs, index ) => {
-        const bang = bang_template.cloneNode( true );
+        document.getElementById( "bang-list" ).appendChild( bang.cloneNode( true ) );
 
-        document.getElementById( "bang-list" ).appendChild( bang );
-        document.getElementsByClassName( "bang-name" )[ index ].innerHTML = "!" + pairs[0];
-        document.getElementsByClassName( "bang-url" )[ index ].innerHTML = pairs[1];
+        const details = document.getElementsByClassName( "bang" )[ index ].getElementsByTagName( "span" );
+        details[0].innerHTML = pairs[0];
+        details[1].innerHTML = pairs[1];
     } );
 }
 
