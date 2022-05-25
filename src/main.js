@@ -4,8 +4,8 @@ const initializeDefault = ( details ) => {
         if ( items[ "hostnames" ] === undefined ) browser.storage.local.set( { hostnames: [ "duckduckgo" ] } );
         if ( items[ "bangs" ] === undefined ) browser.storage.local.set( { 
         bangs: { 
-                libreddit: "https://libredd.it/r/popular/search?q={{s}}",
-                libreddits: "https://libredd.it/r/{{s}}" 
+                piped: "https://piped.kavin.rocks/results?search_query={{s}}",
+                odysee: "https://odysee.com/$/search?q={{s}}" 
             } 
         } );
     } );
