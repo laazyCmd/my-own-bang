@@ -18,10 +18,6 @@ const route = ( index ) => {
     };
 };
 
-document.getElementById( "bangs-btn" ).addEventListener( "click", () => route( 0 ) );
-document.getElementById( "about-btn" ).addEventListener( "click", () => route( 1 ) );
-
-
 /** show data inside respective lists */
 const loadLists = ( hostnames, bangs ) => {
     // templates
@@ -36,7 +32,17 @@ const loadLists = ( hostnames, bangs ) => {
     hostnames.forEach( ( value, index ) => {
         document.getElementById( "hostname-list" ).appendChild( hostname.cloneNode( true ) );
         document.getElementsByClassName( "hostname-entry" )[ index ].id = value;
-        document.getElementById( value ).getElementsByTagName( "span" )[0].innerHTML = value;
+
+        const details = document.getElementById( value ).getElementsByTagName( "span" );
+        const checkbox = document.getElementById( value ).getElementsByTagName( "input" )[0];
+
+        details[0].innerHTML = value;
+
+        checkbox.addEventListener( 'click', () => document.getElementById( "hostnames-rem" ).disabled = false );
+        details[0].addEventListener( 'click', () => {
+            details[0].contentEditable = true;
+            document.getElementById( "hostnames-save" ).disabled = false 
+        } );
     } );
 
     // load bangs
@@ -45,10 +51,26 @@ const loadLists = ( hostnames, bangs ) => {
         document.getElementsByClassName( "bang-entry" )[ index ].id = pairs[ 0 ];
 
         const details = document.getElementById( pairs[ 0 ] ).getElementsByTagName( "span" );
+        const checkbox = document.getElementById( pairs[ 0 ] ).getElementsByTagName( "input" )[0];
+
         details[0].innerHTML = pairs[0];
         details[1].innerHTML = pairs[1];
+
+        checkbox.addEventListener( 'click', () => document.getElementById( "bangs-rem" ).disabled = false );
+        details[0].addEventListener( 'click', () => {
+            details[0].contentEditable = true
+            document.getElementById( "bangs-save" ).disabled = false 
+        } );
+        details[1].addEventListener( 'click', () => {
+            details[1].contentEditable = true
+            document.getElementById( "bangs-save" ).disabled = false 
+        } );
     } );
 }
+
+
+document.getElementById( "bangs-btn" ).addEventListener( "click", () => route( 0 ) );
+document.getElementById( "about-btn" ).addEventListener( "click", () => route( 1 ) );
 
 
 /** run on page load */
