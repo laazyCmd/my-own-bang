@@ -36,7 +36,7 @@ const loadLists = ( hostnames, bangs ) => {
     hostnames.forEach( ( value, index ) => {
         document.getElementById( "hostname-list" ).appendChild( hostname.cloneNode( true ) );
         document.getElementsByClassName( "hostname-entry" )[ index ].id = value;
-        document.getElementsByClassName( "hostname" )[ index ].getElementsByTagName( "span" )[0].innerHTML = value;
+        document.getElementById( value ).getElementsByTagName( "span" )[0].innerHTML = value;
     } );
 
     // load bangs
@@ -44,7 +44,7 @@ const loadLists = ( hostnames, bangs ) => {
         document.getElementById( "bang-list" ).appendChild( bang.cloneNode( true ) );
         document.getElementsByClassName( "bang-entry" )[ index ].id = pairs[ 0 ];
 
-        const details = document.getElementsByClassName( "bang" )[ index ].getElementsByTagName( "span" );
+        const details = document.getElementById( pairs[ 0 ] ).getElementsByTagName( "span" );
         details[0].innerHTML = pairs[0];
         details[1].innerHTML = pairs[1];
     } );
