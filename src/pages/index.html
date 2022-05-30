@@ -10,13 +10,13 @@
                 <section class="details-summary">
                     <h1>Hostnames</h1>
                     <div>
-                        <button class="rem-btn" disabled>
+                        <button id="hostnames-rem" class="rem-btn" disabled>
                             Remove
                         </button>
-                        <button class="rem-btn" disabled>
+                        <button id="hostnames-save" class="save-btn" disabled>
                             Save
                         </button>
-                        <button class="add-btn">
+                        <button id="hostnames-add" class="add-btn">
                             Add
                         </button>
                     </div>
@@ -39,13 +39,13 @@
                     <section class="details-summary">
                         <h1>Bangs</h1>
                         <div>
-                            <button class="rem-btn" disabled>
+                            <button id="bangs-rem" class="rem-btn" disabled>
                                 Remove
                             </button>
-                            <button class="rem-btn" disabled>
+                            <button id="bangs-save" class="save-btn" disabled>
                                 Save
                             </button>
-                            <button class="add-btn">
+                            <button id="bang-add" class="add-btn">
                                 Add
                             </button>
                         </div>
@@ -165,22 +165,37 @@
             background-color: #009900;
         }
 
+        .save-btn {
+            background-color: #cc6600;
+            padding: 5px 15px;
+            border-radius: 0.125rem;
+            cursor: pointer;
+            transition-duration: 300ms;
+        }
+
+        .save-btn:hover {
+            background-color: #ff9900;
+        }
+
         .rem-btn {
             background-color: #990000;
             padding: 5px 15px;
             border-radius: 0.125rem;
             cursor: pointer;
+            transition-duration: 300ms;
         }
 
         .rem-btn:hover {
             background-color: #cc3300;
         }
 
+        .save-btn:disabled,
         .rem-btn:disabled {
             background-color: #666666;
             color: #c9c9c9;
         }
         
+        .save-btn:disabled:hover,
         .rem-btn:disabled:hover {
             background-color: #838383;
         }
