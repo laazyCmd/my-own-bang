@@ -1,21 +1,42 @@
-/** page routing */
-const routes = [
-    "pages/index.html",
-    "pages/about.html"
-];
+/** save data from hostnames list */
+const saveHostnames = async () => {
+    let saved_hostnames = [];
+    await browser.storage.local.get( [ "hostnames" ] )
+    .then( data => saved_hostnames = data.hostnames );
 
-const route = ( index ) => {
-    const route = routes[ index ] || routes[ 0 ];
-    const request = new XMLHttpRequest();
-    
-    request.open( 'GET', route );
-    request.send();
-    request.onload = () => {
-        document.getElementById( "page" ).innerHTML = request.response;
-        if ( index === 0 )
-            browser.storage.local.get( [ "hostnames", "bangs" ] )
-            .then( data => loadLists( data.hostnames, data.bangs ) );
-    };
+    const hostnames = document.getElementsByClassName( "hostname-entry" );
+    for ( let element of hostnames ) {
+        const input = element.getElementsByTagName( "span" );
+        if ( input[0].isContentEditable ) {
+            saved_hostnames = [ ...saved_hostnames.filter( h => h == element.id ), input[0].innerHTML ];
+            input[0].contentEditable = false;
+        }
+    }
+
+    browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
+    document.getElementById( "hostnames-save" ).disabled = true;
+};
+
+/** save data from bangs list */
+const saveBangs = async () => {
+    let saved_bangs = {};
+    await browser.storage.local.get( [ "bangs" ] )
+    .then( data => saved_bangs = data.bangs );
+
+    const bangs = document.getElementsByClassName( "bang-entry" );
+    for ( let element of bangs ) {
+        const input = element.getElementsByTagName( "span" );
+        if ( input[0].isContentEditable || input[1].isContentEditable ) {
+            delete saved_bangs[ element.id ];
+            saved_bangs[ input[0].innerHTML ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
+            input[0].contentEditable = false;
+            input[1].contentEditable = false;
+        }
+    }
+
+    const new_bangs = Object.fromEntries( Object.entries( saved_bangs ).sort() );
+    await browser.storage.local.set( { bangs: new_bangs } );
+    document.getElementById( "bangs-save" ).disabled = true;
 };
 
 /** show data inside respective lists */
@@ -41,7 +62,7 @@ const loadLists = ( hostnames, bangs ) => {
         checkbox.addEventListener( 'click', () => document.getElementById( "hostnames-rem" ).disabled = false );
         details[0].addEventListener( 'click', () => {
             details[0].contentEditable = true;
-            document.getElementById( "hostnames-save" ).disabled = false 
+            document.getElementById( "hostnames-save" ).disabled = false;
         } );
     } );
 
@@ -58,15 +79,38 @@ const loadLists = ( hostnames, bangs ) => {
 
         checkbox.addEventListener( 'click', () => document.getElementById( "bangs-rem" ).disabled = false );
         details[0].addEventListener( 'click', () => {
-            details[0].contentEditable = true
-            document.getElementById( "bangs-save" ).disabled = false 
+            details[0].contentEditable = true;
+            document.getElementById( "bangs-save" ).disabled = false;
         } );
         details[1].addEventListener( 'click', () => {
-            details[1].contentEditable = true
-            document.getElementById( "bangs-save" ).disabled = false 
+            details[1].contentEditable = true;
+            document.getElementById( "bangs-save" ).disabled = false;
         } );
     } );
+
+    document.getElementById( "hostnames-save" ).addEventListener( "click", saveHostnames );
+    document.getElementById( "bangs-save" ).addEventListener( "click", saveBangs );
 }
+
+/** page routing */
+const routes = [
+    "pages/index.html",
+    "pages/about.html"
+];
+
+const route = ( index ) => {
+    const route = routes[ index ] || routes[ 0 ];
+    const request = new XMLHttpRequest();
+    
+    request.open( 'GET', route );
+    request.send();
+    request.onload = async () => {
+        document.getElementById( "page" ).innerHTML = request.response;
+        if ( index === 0 )
+            await browser.storage.local.get( [ "hostnames", "bangs" ] )
+            .then( data => loadLists( data.hostnames, data.bangs ) );
+    };
+};
 
 
 document.getElementById( "bangs-btn" ).addEventListener( "click", () => route( 0 ) );
