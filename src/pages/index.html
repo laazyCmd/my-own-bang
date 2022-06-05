@@ -34,7 +34,7 @@
         </details>
         
         <div id="index-bangs">
-            <details id="bangs-list" open>
+            <details id="bangs-list">
                 <summary>
                     <section class="details-summary">
                         <h1>Bangs</h1>
@@ -128,6 +128,11 @@
             background-color: white;
             border: 1px solid #d9d9d9;
             border-radius: 8px;
+            display: inline-block;
+        }
+
+        [contenteditable="true"] br {
+            display: none;
         }
 
         .bang-url {
