@@ -4,10 +4,13 @@ const saveHostnames = async () => {
     await browser.storage.local.get( [ "hostnames" ] )
     .then( data => saved_hostnames = data.hostnames );
 
+    // TODO: FIX THIS!!! WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     const hostnames = document.getElementsByClassName( "hostname-entry" );
     for ( let element of hostnames ) {
         const input = element.getElementsByTagName( "span" );
+        if ( input[ 0 ].innerText === "%hostname%" ) continue;
         if ( input[0].isContentEditable ) {
+            // TODO: don't use this specific variable, because unedited hostnames will be omitted
             saved_hostnames = [ ...saved_hostnames.filter( h => h == element.id ), input[0].innerHTML ];
             input[0].contentEditable = false;
         }
@@ -26,7 +29,9 @@ const saveBangs = async () => {
     const bangs = document.getElementsByClassName( "bang-entry" );
     for ( let element of bangs ) {
         const input = element.getElementsByTagName( "span" );
-        if ( input[0].isContentEditable || input[1].isContentEditable ) {
+        if ( input[ 0 ].innerText === "%bang%" || input[ 1 ].innerText === "%bang_url%" ) continue;
+        console.log( input[0].innerText );
+        if ( input[ 0 ].isContentEditable || input[ 1 ].isContentEditable ) {
             delete saved_bangs[ element.id ];
             saved_bangs[ input[0].innerHTML ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
             input[0].contentEditable = false;
@@ -39,13 +44,38 @@ const saveBangs = async () => {
     document.getElementById( "bangs-save" ).disabled = true;
 };
 
+/** add new data to hostname list */
+const addHostname = ( template ) => {
+    // enable respective save button
+    document.getElementById( "hostnames-save" ).disabled = false;
+
+    const hostname_list = document.getElementById( "hostname-list" );
+    const new_hostname = hostname_list.insertAdjacentElement( "afterbegin", template.cloneNode( true ) );
+    
+    // make editable
+    new_hostname.getElementsByTagName( "span" )[ 0 ].contentEditable = true;
+};
+
+/** add new data to bangs list */
+const addBang = ( template ) => {
+    // enable respective save button
+    document.getElementById( "bangs-save" ).disabled = false;
+
+    const bang_list = document.getElementById( "bang-list" );
+    const new_bang = bang_list.insertAdjacentElement( "afterbegin", template.cloneNode( true ) );
+    
+    // make editable
+    new_bang.getElementsByTagName( "span" )[ 0 ].contentEditable = true;
+    new_bang.getElementsByTagName( "span" )[ 1 ].contentEditable = true;
+};
+
 /** show data inside respective lists */
 const loadLists = ( hostnames, bangs ) => {
-    // templates
+    // clone templates
     const hostname = document.getElementsByClassName( "hostname-entry" )[0].cloneNode( true );
     const bang = document.getElementsByClassName( "bang-entry" )[0].cloneNode( true );
 
-    // clear templates
+    // clear default templates
     document.getElementsByClassName( "hostname-entry" )[0].remove();
     document.getElementsByClassName( "bang-entry" )[0].remove();
 
@@ -88,9 +118,15 @@ const loadLists = ( hostnames, bangs ) => {
         } );
     } );
 
+    // initialize saving buttons
     document.getElementById( "hostnames-save" ).addEventListener( "click", saveHostnames );
     document.getElementById( "bangs-save" ).addEventListener( "click", saveBangs );
-}
+
+    // initialize add buttons with templates
+    document.getElementById( "hostnames-add" ).addEventListener( "click", () => addHostname( hostname ) );
+    document.getElementById( "bangs-add" ).addEventListener( "click", () => addBang( bang ) );
+};
+
 
 /** page routing */
 const routes = [
@@ -112,10 +148,8 @@ const route = ( index ) => {
     };
 };
 
-
 document.getElementById( "bangs-btn" ).addEventListener( "click", () => route( 0 ) );
 document.getElementById( "about-btn" ).addEventListener( "click", () => route( 1 ) );
-
 
 /** run on page load */
 window.onload = ( event ) => route( 0 ); // start at index.html
