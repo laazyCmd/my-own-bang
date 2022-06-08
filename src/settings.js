@@ -3,15 +3,15 @@ const saveHostnames = async () => {
     let saved_hostnames = [];
     await browser.storage.local.get( [ "hostnames" ] )
     .then( data => saved_hostnames = data.hostnames );
+    console.log( saved_hostnames );
 
-    // TODO: FIX THIS!!! WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     const hostnames = document.getElementsByClassName( "hostname-entry" );
     for ( let element of hostnames ) {
         const input = element.getElementsByTagName( "span" );
         if ( input[ 0 ].innerText === "%hostname%" ) continue;
         if ( input[0].isContentEditable ) {
-            // TODO: don't use this specific variable, because unedited hostnames will be omitted
-            saved_hostnames = [ ...saved_hostnames.filter( h => h == element.id ), input[0].innerHTML ];
+            saved_hostnames = saved_hostnames.filter( e => e !== element.id );
+            saved_hostnames.push( input[0].innerText );
             input[0].contentEditable = false;
         }
     }
