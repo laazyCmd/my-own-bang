@@ -68,8 +68,8 @@ const saveBangs = async () => {
     const bangs = document.getElementsByClassName( "bang-entry" );
     for ( const bang of bangs ) {
         const input = bang.getElementsByTagName( "span" );
-        if ( input[ 0 ].innerText === "" ) continue;
-        if ( input[ 0 ].innerText === "%bang%" && input[ 1 ].innerText === "%bang_url%" ) continue;
+        if ( ( input[ 0 ].innerText === "%bang%" || input[ 0 ].innerText === "" ) && 
+            input[ 1 ].innerText === "%bang_url%" ) continue;
         
         if ( input[ 0 ].isContentEditable || input[ 1 ].isContentEditable ) {
             saved_bangs[ input[0].innerText ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
