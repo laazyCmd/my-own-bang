@@ -1,11 +1,62 @@
+/** remove data from a hostname list */
+const removeHostnames = async () => {
+    let saved_hostnames = [];
 
+    const hostnames = document.getElementById( "hostname-list" );
+    const to_remove = [];
+    for ( const hostname of hostnames.children ) {
+        const checkbox = hostname.getElementsByTagName( "input" )[ 0 ];
+        if ( checkbox.checked ) {
+            to_remove.push( hostname );
+            continue;
+        }
+        saved_hostnames.push( hostname );
+    }
+
+    // remove selected hostnames
+    for ( const removed of to_remove ) {
+        hostnames.removeChild( removed );
+    }
+    
+    await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
+
+    document.getElementById( "hostnames-rem" ).disabled = true;
+    loadHostnames( saved_hostnames, hostnames.children[ 0 ] );
+};
+
+/** remove data from a bang list */
+const removeBangs = async () => {
+    let saved_bangs = {};
+    await browser.storage.local.get( [ "bangs" ] )
+    .then( data => saved_bangs = data.bangs );
+
+    const bangs = document.getElementById( "bang-list" );
+    const to_remove = [];
+    for ( const bang of bangs.children ) {
+        const checkbox = bang.getElementsByTagName( "input" )[ 0 ];
+        if ( checkbox.checked ) {
+            delete saved_bangs[ bang.id ];
+            to_remove.push( bang );
+        }
+    }
+
+    // remove selected bangs
+    for ( const removed of to_remove ) {
+        bangs.removeChild( removed );
+    }
+
+    const new_bangs = Object.fromEntries( Object.entries( saved_bangs ).sort() );
+    await browser.storage.local.set( { bangs: new_bangs } );
+
+    document.getElementById( "bangs-rem" ).disabled = true;
+    loadBangs( new_bangs, bangs.children[ 0 ] );
+};
 
 /** save data from hostnames list */
 const saveHostnames = async () => {
     let saved_hostnames = [];
     await browser.storage.local.get( [ "hostnames" ] )
     .then( data => saved_hostnames = data.hostnames );
-    console.log( saved_hostnames );
 
     const hostnames = document.getElementsByClassName( "hostname-entry" );
     for ( let element of hostnames ) {
@@ -21,7 +72,8 @@ const saveHostnames = async () => {
         }
     }
 
-    browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
+    await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
+
     document.getElementById( "hostnames-save" ).disabled = true;
     loadHostnames( saved_hostnames, hostnames[ 0 ] );
 };
@@ -35,7 +87,7 @@ const saveBangs = async () => {
     const bangs = document.getElementsByClassName( "bang-entry" );
     for ( let element of bangs ) {
         const input = element.getElementsByTagName( "span" );
-        if ( input[ 0 ].innerText === "%bang%" || input[ 1 ].innerText === "%bang_url%" ) {
+        if ( input[ 0 ].innerText === "%bang%" && input[ 1 ].innerText === "%bang_url%" ) {
             input[0].contentEditable = false;
             input[1].contentEditable = false;
             continue;
@@ -43,11 +95,14 @@ const saveBangs = async () => {
         if ( input[ 0 ].isContentEditable || input[ 1 ].isContentEditable ) {
             delete saved_bangs[ element.id ];
             saved_bangs[ input[0].innerText ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
+            input[0].contentEditable = false;
+            input[1].contentEditable = false;
         }
     }
 
     const new_bangs = Object.fromEntries( Object.entries( saved_bangs ).sort() );
     await browser.storage.local.set( { bangs: new_bangs } );
+    
     document.getElementById( "bangs-save" ).disabled = true;
     loadBangs( new_bangs, bangs[ 0 ] );
 };
@@ -79,6 +134,9 @@ const addBang = ( template ) => {
 
 /** show data inside hostname list */
 const loadHostnames = ( hostnames, template ) => {
+    // stop if template is missing
+    if ( !template ) return;
+
     // remove all current hostname entries
     document.getElementById( "hostname-list" ).replaceChildren();
 
@@ -103,6 +161,9 @@ const loadHostnames = ( hostnames, template ) => {
 
 /** show data inside bang list */
 const loadBangs = ( bangs, template ) => {
+    // stop if template is missing
+    if ( !template ) return;
+
     // remove all current bang entries
     document.getElementById( "bang-list" ).replaceChildren();
 
@@ -146,6 +207,10 @@ const loadLists = ( hostnames, bangs ) => {
 
     // load bangs
     loadBangs( bangs, bang_template );
+
+    // initialize remove buttons
+    document.getElementById( "hostnames-rem" ).addEventListener( "click", removeHostnames );
+    document.getElementById( "bangs-rem" ).addEventListener( "click", removeBangs );
 
     // initialize saving buttons
     document.getElementById( "hostnames-save" ).addEventListener( "click", saveHostnames );
