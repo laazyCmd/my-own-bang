@@ -17,8 +17,6 @@ const removeHostnames = async () => {
     }
     
     await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
-
-    document.getElementById( "hostnames-rem" ).disabled = true;
     loadHostnames( saved_hostnames, hostnames.children[ 0 ] );
 };
 
@@ -41,8 +39,6 @@ const removeBangs = async () => {
     
     const new_bangs = Object.fromEntries( Object.entries( saved_bangs ).sort() );
     await browser.storage.local.set( { bangs: new_bangs } );
-
-    document.getElementById( "bangs-rem" ).disabled = true;
     loadBangs( new_bangs, bangs.children[ 0 ] );
 };
 
@@ -62,8 +58,6 @@ const saveHostnames = async () => {
     }
 
     await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
-
-    document.getElementById( "hostnames-save" ).disabled = true;
     loadHostnames( saved_hostnames, hostnames[ 0 ] );
 };
 
@@ -83,8 +77,6 @@ const saveBangs = async () => {
 
     const new_bangs = Object.fromEntries( Object.entries( saved_bangs ).sort() );
     await browser.storage.local.set( { bangs: new_bangs } );
-    
-    document.getElementById( "bangs-save" ).disabled = true;
     loadBangs( new_bangs, bangs[ 0 ] );
 };
 
