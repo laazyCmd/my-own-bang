@@ -1,7 +1,7 @@
 /** initialization of default values for the first runtime (runs once after install/update) */
 const initializeDefault = ( details ) => {
-    browser.storage.local.get( [ "hostnames", "bangs" ] ).then( items => {
-        if ( items[ "hostnames" ] === undefined ) browser.storage.local.set( { hostnames: [ "duckduckgo" ] } );
+    browser.storage.local.get( [ "hostname", "bangs" ] ).then( items => {
+        if ( items[ "hostname" ] === undefined ) browser.storage.local.set( { hostname: "duckduckgo.com" } );
         if ( items[ "bangs" ] === undefined ) browser.storage.local.set( { 
         bangs: { 
                 odysee: "https://odysee.com/$/search?q={{s}}" ,
@@ -12,6 +12,12 @@ const initializeDefault = ( details ) => {
 };
 
 browser.runtime.onInstalled.addListener( initializeDefault );
+
+const getHostname = async () => {
+    await browser.storage.local.get( "hostname" ).then( data => {
+        return data;
+    } );
+};
 
 const checkBang = ( details ) => {
     const search_query = /(%21)(\w+)[+]((\w+|[+])+)/.exec( details.url ); // get prefix and search query
@@ -26,4 +32,4 @@ const navigateToBang = ( address, query ) => {
     browser.tabs.update( { url: address.replace( "{{s}}", query ) } );
 }
 
-browser.webNavigation.onBeforeNavigate.addListener( checkBang, { url: [ { hostPrefix: "duckduckgo" } ] } );
+browser.webNavigation.onBeforeNavigate.addListener( checkBang, { url: [ { hostEquals: getHostname().hostname } ] } );

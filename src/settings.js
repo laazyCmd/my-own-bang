@@ -1,25 +1,3 @@
-/** remove data from a hostname list */
-const removeHostnames = async () => {
-    let saved_hostnames = [];
-    let to_remove = [];
-
-    const hostnames = document.getElementById( "hostname-list" );
-    for ( const hostname of hostnames.children ) {
-        const checkbox = hostname.getElementsByTagName( "input" )[ 0 ];
-        if ( checkbox.checked ) {
-            to_remove.push( hostname );
-        } else saved_hostnames.push( hostname );
-    }
-
-    // remove selected hostnames
-    for ( const removed of to_remove ) {
-        hostnames.removeChild( removed );
-    }
-    
-    await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
-    loadHostnames( saved_hostnames, hostnames.children[ 0 ] );
-};
-
 /** remove data from a bang list */
 const removeBangs = async () => {
     let saved_bangs = {};
@@ -42,23 +20,16 @@ const removeBangs = async () => {
     loadBangs( new_bangs, bangs.children[ 0 ] );
 };
 
-/** save data from hostnames list */
-const saveHostnames = async () => {
-    let saved_hostnames = [];
+/** save data from hostname list */
+const saveHostname = async () => {
+    const hostname_entry = document.getElementsByClassName( "hostname-entry" )[ 0 ];
 
-    const hostnames = document.getElementsByClassName( "hostname-entry" );
-    for ( const hostname of hostnames ) {
-        const input = hostname.getElementsByTagName( "span" );
-        if ( input[ 0 ].innerText === "%hostname%" || input[ 0 ].innerText === "" ) continue;
+    const input = hostname_entry.getElementsByTagName( "span" )[ 0 ];
+    input.contentEditable = false;
 
-        if ( input[0].isContentEditable ) {
-            saved_hostnames.push( input[0].innerText );
-            input[0].contentEditable = false;
-        } else saved_hostnames.push( hostname.id );
-    }
-
-    await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
-    loadHostnames( saved_hostnames, hostnames[ 0 ] );
+    const new_hostname = input.innerText || "duckduckgo.com";
+    await browser.storage.local.set( { hostname: new_hostname } );
+    loadHostname( new_hostname, hostname_entry );
 };
 
 /** save data from bangs list */
@@ -81,18 +52,6 @@ const saveBangs = async () => {
     loadBangs( new_bangs, bangs[ 0 ] );
 };
 
-/** add new data to hostname list */
-const addHostname = ( template ) => {
-    // enable respective save button
-    document.getElementById( "hostnames-save" ).disabled = false;
-
-    const hostname_list = document.getElementById( "hostname-list" );
-    const new_hostname = hostname_list.insertAdjacentElement( "afterbegin", template.cloneNode( true ) );
-    
-    // make editable
-    new_hostname.getElementsByTagName( "span" )[ 0 ].contentEditable = true;
-};
-
 /** add new data to bangs list */
 const addBang = ( template ) => {
     // enable respective save button
@@ -107,37 +66,24 @@ const addBang = ( template ) => {
 };
 
 /** show data inside hostname list */
-const loadHostnames = ( hostnames, template ) => {
+const loadHostname = ( hostname, template ) => {
     // stop if template is missing
     if ( !template ) return;
 
-    // untick checkox and disable editing
-    template.getElementsByTagName( "input" )[ 0 ].checked = false;
+    // disable editing
     template.getElementsByTagName( "span" )[ 0 ].contentEditable = false;
 
-    // remove all current hostname entries
-    document.getElementById( "hostname-list" ).replaceChildren();
+    template.id = hostname;
 
-    for ( const name of hostnames ) {
-        const hostname = template.cloneNode( true );
-        hostname.id = name;
+    const details = template.getElementsByTagName( "span" )[ 0 ];
+    details.innerText = hostname;
 
-        const details = hostname.getElementsByTagName( "span" );
-        const checkbox = hostname.getElementsByTagName( "input" )[0];
+    details.addEventListener( 'click', () => {
+        details.contentEditable = true;
+        document.getElementById( "hostname-save" ).disabled = false;
+    } );
 
-        details[ 0 ].innerText = name;
-
-        document.getElementById( "hostname-list" ).appendChild( hostname );
-
-        checkbox.addEventListener( 'click', () => document.getElementById( "hostnames-rem" ).disabled = false );
-        details[0].addEventListener( 'click', () => {
-            details[0].contentEditable = true;
-            document.getElementById( "hostnames-save" ).disabled = false;
-        } );
-    }
-
-    document.getElementById( "hostnames-rem" ).disabled = true;
-    document.getElementById( "hostnames-save" ).disabled = true;
+    document.getElementById( "hostname-save" ).disabled = true;
 };
 
 /** show data inside bang list */
@@ -182,31 +128,26 @@ const loadBangs = ( bangs, template ) => {
 };
 
 /** show data inside respective lists */
-const loadLists = ( hostnames, bangs ) => {
+const loadLists = ( hostname, bangs ) => {
     // clone templates
-    const hostname_template = document.getElementsByClassName( "hostname-entry" )[0].cloneNode( true );
-    const bang_template = document.getElementsByClassName( "bang-entry" )[0].cloneNode( true );
+    const hostname_template = document.getElementsByClassName( "hostname-entry" )[0];
+    const bang_template = document.getElementsByClassName( "bang-entry" )[0];
 
-    // clear default templates
-    document.getElementsByClassName( "hostname-entry" )[0].remove();
+    // clear default bang template
     document.getElementsByClassName( "bang-entry" )[0].remove();
 
-    // load hostnames
-    loadHostnames( hostnames, hostname_template );
+    // load hostname
+    loadHostname( hostname, hostname_template );
 
     // load bangs
     loadBangs( bangs, bang_template );
 
-    // initialize remove buttons
-    document.getElementById( "hostnames-rem" ).addEventListener( "click", removeHostnames );
+    // initialize hostname save
+    document.getElementById( "hostname-save" ).addEventListener( "click", saveHostname );
+    
+    // initialize bangs buttons
     document.getElementById( "bangs-rem" ).addEventListener( "click", removeBangs );
-
-    // initialize saving buttons
-    document.getElementById( "hostnames-save" ).addEventListener( "click", saveHostnames );
     document.getElementById( "bangs-save" ).addEventListener( "click", saveBangs );
-
-    // initialize add buttons with templates
-    document.getElementById( "hostnames-add" ).addEventListener( "click", () => addHostname( hostname_template ) );
     document.getElementById( "bangs-add" ).addEventListener( "click", () => addBang( bang_template ) );
 };
 
@@ -227,8 +168,8 @@ const route = ( index ) => {
     request.onload = async () => {
         document.getElementById( "page" ).innerHTML = request.response;
         if ( index === 0 )
-            await browser.storage.local.get( [ "hostnames", "bangs" ] )
-            .then( data => loadLists( data.hostnames, data.bangs ) );
+            await browser.storage.local.get( [ "hostname", "bangs" ] )
+            .then( data => loadLists( data.hostname, data.bangs ) );
     };
 };
 

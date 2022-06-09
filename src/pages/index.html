@@ -12,14 +12,8 @@
                 <section class="details-summary">
                     <h1>Hostnames</h1>
                     <div>
-                        <button id="hostnames-rem" class="rem-btn" disabled>
-                            Remove
-                        </button>
-                        <button id="hostnames-save" class="save-btn" disabled>
+                        <button id="hostname-save" class="save-btn" disabled>
                             Save
-                        </button>
-                        <button id="hostnames-add" class="add-btn">
-                            Add
                         </button>
                     </div>
                 </section>
@@ -27,7 +21,6 @@
             </summary>
             <ul id="hostname-list">
                 <li class="hostname-entry">
-                    <input type="checkbox">
                     <section class="hostname">
                         <span contenteditable="false">%hostname%</span>
                     </section>
@@ -141,6 +134,7 @@
             display: inline-block;
         }
 
+        [contenteditable="false"] br,
         [contenteditable="true"] br {
             display: none;
         }
