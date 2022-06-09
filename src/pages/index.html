@@ -72,6 +72,17 @@
             list-style-type: none;
         }
 
+        #hostnames-list summary,
+        #bangs-list summary {
+            padding-top: 10px;
+            cursor: pointer;
+        }
+
+        #hostnames-list summary:hover,
+        #bangs-list summary:hover {
+            background-color: #83838311;
+        }
+
         #hostname-list,
         #bang-list {
             display: flex;
@@ -79,7 +90,7 @@
             margin: 1rem 0;
             row-gap: 8px;
         }
-
+        
         .hostname-entry,
         .bang-entry {
             padding: 0 1rem;
