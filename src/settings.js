@@ -1,3 +1,5 @@
+
+
 /** save data from hostnames list */
 const saveHostnames = async () => {
     let saved_hostnames = [];
@@ -40,7 +42,7 @@ const saveBangs = async () => {
         };
         if ( input[ 0 ].isContentEditable || input[ 1 ].isContentEditable ) {
             delete saved_bangs[ element.id ];
-            saved_bangs[ input[0].innerHTML ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
+            saved_bangs[ input[0].innerText ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
         }
     }
 
@@ -86,7 +88,7 @@ const loadHostnames = ( hostnames, template ) => {
 
         const details = hostname.getElementsByTagName( "span" );
         const checkbox = hostname.getElementsByTagName( "input" )[0];
-        
+
         details[ 0 ].innerText = name;
 
         document.getElementById( "hostname-list" ).appendChild( hostname );
@@ -112,8 +114,8 @@ const loadBangs = ( bangs, template ) => {
         const details = bang.getElementsByTagName( "span" );
         const checkbox = bang.getElementsByTagName( "input" )[0];
 
-        details[0].innerHTML = name;
-        details[1].innerHTML = address;
+        details[0].innerText = name;
+        details[1].innerText = address;
 
         document.getElementById( "bang-list" ).appendChild( bang );
 
