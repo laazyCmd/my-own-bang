@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+
+    <body id="help">
+        <div id="help-info">
+            <header>
+                <section id="help-header">
+                    <h1>Help</h1>
+                </section>
+                <div id="help-hr"></div>
+            </header>
+        </div>
+    </body>
+
+    <style>
+        #help-info {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+            padding-top: 10px
+        }
+
+        #help-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 0.75rem;
+        }
+        
+        #help-header > h1 {
+            font-weight: 600;
+            font-size: 1.5rem; /* 24px */
+            line-height: 2rem; /* 32px */
+        }
+
+        #help-hr {
+            border: 0.5px solid #838383;
+        }
+    </style>
+</html>

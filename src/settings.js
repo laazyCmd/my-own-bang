@@ -214,6 +214,7 @@ const loadLists = ( hostnames, bangs ) => {
 /** page routing */
 const routes = [
     "pages/index.html",
+    "pages/help.html",
     "pages/about.html"
 ];
 
@@ -232,7 +233,8 @@ const route = ( index ) => {
 };
 
 document.getElementById( "bangs-btn" ).addEventListener( "click", () => route( 0 ) );
-document.getElementById( "about-btn" ).addEventListener( "click", () => route( 1 ) );
+document.getElementById( "help-btn" ).addEventListener( "click", () => route( 1 ) );
+document.getElementById( "about-btn" ).addEventListener( "click", () => route( 2 ) );
 
 /** run on page load */
 window.onload = ( event ) => route( 0 ); // start at index.html
