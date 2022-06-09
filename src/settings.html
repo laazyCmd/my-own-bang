@@ -47,13 +47,17 @@
         }
 
         
-        nav > div {
+        nav div {
             display: flex;
             align-items: center;
             position: relative;
         }
 
-        nav > div > section {
+        nav div > header img {
+            padding-top: 6px;
+        }
+
+        nav div > section {
             display: flex;
             height: 100%;
             width: 100%;
@@ -61,13 +65,13 @@
             justify-content: center;
         }
 
-        nav > div > section > button {
+        nav div > section button {
             cursor: pointer;
             padding: 1rem 1.25rem;
             border-bottom: 3px solid #40444b;
         }
 
-        nav > div > section > button:hover {
+        nav div > section button:hover {
             border-bottom: 2.75px solid #838383;
             background-color: #83838323;
         }
