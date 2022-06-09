@@ -10,6 +10,7 @@ const removeHostnames = async () => {
             to_remove.push( hostname );
             continue;
         }
+
         saved_hostnames.push( hostname );
     }
 
@@ -55,8 +56,6 @@ const removeBangs = async () => {
 /** save data from hostnames list */
 const saveHostnames = async () => {
     let saved_hostnames = [];
-    await browser.storage.local.get( [ "hostnames" ] )
-    .then( data => saved_hostnames = data.hostnames );
 
     const hostnames = document.getElementsByClassName( "hostname-entry" );
     for ( let element of hostnames ) {
@@ -66,10 +65,12 @@ const saveHostnames = async () => {
             continue;
         }
         if ( input[0].isContentEditable ) {
-            saved_hostnames = saved_hostnames.filter( e => e !== element.id );
             saved_hostnames.push( input[0].innerText );
             input[0].contentEditable = false;
+            continue;
         }
+
+        saved_hostnames.push( element.id );
     }
 
     await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
