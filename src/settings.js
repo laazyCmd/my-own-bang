@@ -77,6 +77,7 @@ const loadHostname = ( hostname, template ) => {
 
     const details = template.getElementsByTagName( "span" )[ 0 ];
     details.innerText = hostname;
+    details.title = hostname;
 
     details.addEventListener( 'click', () => {
         details.contentEditable = true;
@@ -103,12 +104,14 @@ const loadBangs = ( bangs, template ) => {
     for ( const [ name, address ] of Object.entries( bangs ) ) {
         const bang = template.cloneNode( true );
         bang.id = name;
+        bang.title = name;
 
         const details = bang.getElementsByTagName( "span" );
         const checkbox = bang.getElementsByTagName( "input" )[0];
 
         details[0].innerText = name;
         details[1].innerText = address;
+        details[ 1 ].title = address;
 
         document.getElementById( "bang-list" ).appendChild( bang );
 
