@@ -8,7 +8,10 @@ const saveHostnames = async () => {
     const hostnames = document.getElementsByClassName( "hostname-entry" );
     for ( let element of hostnames ) {
         const input = element.getElementsByTagName( "span" );
-        if ( input[ 0 ].innerText === "%hostname%" ) continue;
+        if ( input[ 0 ].innerText === "%hostname%" ) {
+            input[ 0 ].contentEditable = false;
+            continue;
+        }
         if ( input[0].isContentEditable ) {
             saved_hostnames = saved_hostnames.filter( e => e !== element.id );
             saved_hostnames.push( input[0].innerText );
@@ -18,6 +21,7 @@ const saveHostnames = async () => {
 
     browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
     document.getElementById( "hostnames-save" ).disabled = true;
+    loadHostnames( saved_hostnames, hostnames[ 0 ] );
 };
 
 /** save data from bangs list */
@@ -29,19 +33,21 @@ const saveBangs = async () => {
     const bangs = document.getElementsByClassName( "bang-entry" );
     for ( let element of bangs ) {
         const input = element.getElementsByTagName( "span" );
-        if ( input[ 0 ].innerText === "%bang%" || input[ 1 ].innerText === "%bang_url%" ) continue;
-        console.log( input[0].innerText );
+        if ( input[ 0 ].innerText === "%bang%" || input[ 1 ].innerText === "%bang_url%" ) {
+            input[0].contentEditable = false;
+            input[1].contentEditable = false;
+            continue;
+        };
         if ( input[ 0 ].isContentEditable || input[ 1 ].isContentEditable ) {
             delete saved_bangs[ element.id ];
             saved_bangs[ input[0].innerHTML ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
-            input[0].contentEditable = false;
-            input[1].contentEditable = false;
         }
     }
 
     const new_bangs = Object.fromEntries( Object.entries( saved_bangs ).sort() );
     await browser.storage.local.set( { bangs: new_bangs } );
     document.getElementById( "bangs-save" ).disabled = true;
+    loadBangs( new_bangs, bangs[ 0 ] );
 };
 
 /** add new data to hostname list */
@@ -69,43 +75,47 @@ const addBang = ( template ) => {
     new_bang.getElementsByTagName( "span" )[ 1 ].contentEditable = true;
 };
 
-/** show data inside respective lists */
-const loadLists = ( hostnames, bangs ) => {
-    // clone templates
-    const hostname = document.getElementsByClassName( "hostname-entry" )[0].cloneNode( true );
-    const bang = document.getElementsByClassName( "bang-entry" )[0].cloneNode( true );
+/** show data inside hostname list */
+const loadHostnames = ( hostnames, template ) => {
+    // remove all current hostname entries
+    document.getElementById( "hostname-list" ).replaceChildren();
 
-    // clear default templates
-    document.getElementsByClassName( "hostname-entry" )[0].remove();
-    document.getElementsByClassName( "bang-entry" )[0].remove();
+    for ( const name of hostnames ) {
+        const hostname = template.cloneNode( true );
+        hostname.id = name;
 
-    // load hostnames
-    hostnames.forEach( ( value, index ) => {
-        document.getElementById( "hostname-list" ).appendChild( hostname.cloneNode( true ) );
-        document.getElementsByClassName( "hostname-entry" )[ index ].id = value;
+        const details = hostname.getElementsByTagName( "span" );
+        const checkbox = hostname.getElementsByTagName( "input" )[0];
+        
+        details[ 0 ].innerText = name;
 
-        const details = document.getElementById( value ).getElementsByTagName( "span" );
-        const checkbox = document.getElementById( value ).getElementsByTagName( "input" )[0];
-
-        details[0].innerHTML = value;
+        document.getElementById( "hostname-list" ).appendChild( hostname );
 
         checkbox.addEventListener( 'click', () => document.getElementById( "hostnames-rem" ).disabled = false );
         details[0].addEventListener( 'click', () => {
             details[0].contentEditable = true;
             document.getElementById( "hostnames-save" ).disabled = false;
         } );
-    } );
+    }
+};
 
-    // load bangs
-    Object.entries( bangs ).forEach( ( pairs, index ) => {
-        document.getElementById( "bang-list" ).appendChild( bang.cloneNode( true ) );
-        document.getElementsByClassName( "bang-entry" )[ index ].id = pairs[ 0 ];
+/** show data inside bang list */
+const loadBangs = ( bangs, template ) => {
+    // remove all current bang entries
+    document.getElementById( "bang-list" ).replaceChildren();
 
-        const details = document.getElementById( pairs[ 0 ] ).getElementsByTagName( "span" );
-        const checkbox = document.getElementById( pairs[ 0 ] ).getElementsByTagName( "input" )[0];
+    // load new bangs
+    for ( const [ name, address ] of Object.entries( bangs ) ) {
+        const bang = template.cloneNode( true );
+        bang.id = name;
 
-        details[0].innerHTML = pairs[0];
-        details[1].innerHTML = pairs[1];
+        const details = bang.getElementsByTagName( "span" );
+        const checkbox = bang.getElementsByTagName( "input" )[0];
+
+        details[0].innerHTML = name;
+        details[1].innerHTML = address;
+
+        document.getElementById( "bang-list" ).appendChild( bang );
 
         checkbox.addEventListener( 'click', () => document.getElementById( "bangs-rem" ).disabled = false );
         details[0].addEventListener( 'click', () => {
@@ -116,15 +126,32 @@ const loadLists = ( hostnames, bangs ) => {
             details[1].contentEditable = true;
             document.getElementById( "bangs-save" ).disabled = false;
         } );
-    } );
+    }
+};
+
+/** show data inside respective lists */
+const loadLists = ( hostnames, bangs ) => {
+    // clone templates
+    const hostname_template = document.getElementsByClassName( "hostname-entry" )[0].cloneNode( true );
+    const bang_template = document.getElementsByClassName( "bang-entry" )[0].cloneNode( true );
+
+    // clear default templates
+    document.getElementsByClassName( "hostname-entry" )[0].remove();
+    document.getElementsByClassName( "bang-entry" )[0].remove();
+
+    // load hostnames
+    loadHostnames( hostnames, hostname_template );
+
+    // load bangs
+    loadBangs( bangs, bang_template );
 
     // initialize saving buttons
     document.getElementById( "hostnames-save" ).addEventListener( "click", saveHostnames );
     document.getElementById( "bangs-save" ).addEventListener( "click", saveBangs );
 
     // initialize add buttons with templates
-    document.getElementById( "hostnames-add" ).addEventListener( "click", () => addHostname( hostname ) );
-    document.getElementById( "bangs-add" ).addEventListener( "click", () => addBang( bang ) );
+    document.getElementById( "hostnames-add" ).addEventListener( "click", () => addHostname( hostname_template ) );
+    document.getElementById( "bangs-add" ).addEventListener( "click", () => addBang( bang_template ) );
 };
 
 
