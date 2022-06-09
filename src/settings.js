@@ -49,7 +49,7 @@ const saveHostnames = async () => {
     const hostnames = document.getElementsByClassName( "hostname-entry" );
     for ( const hostname of hostnames ) {
         const input = hostname.getElementsByTagName( "span" );
-        if ( input[ 0 ].innerText === "%hostname%" ) continue;
+        if ( input[ 0 ].innerText === "%hostname%" || input[ 0 ].innerText === "" ) continue;
 
         if ( input[0].isContentEditable ) {
             saved_hostnames.push( input[0].innerText );
@@ -68,6 +68,7 @@ const saveBangs = async () => {
     const bangs = document.getElementsByClassName( "bang-entry" );
     for ( const bang of bangs ) {
         const input = bang.getElementsByTagName( "span" );
+        if ( input[ 0 ].innerText === "" ) continue;
         if ( input[ 0 ].innerText === "%bang%" && input[ 1 ].innerText === "%bang_url%" ) continue;
         
         if ( input[ 0 ].isContentEditable || input[ 1 ].isContentEditable ) {
