@@ -1,9 +1,9 @@
 /** remove data from a hostname list */
 const removeHostnames = async () => {
     let saved_hostnames = [];
+    let to_remove = [];
 
     const hostnames = document.getElementById( "hostname-list" );
-    const to_remove = [];
     for ( const hostname of hostnames.children ) {
         const checkbox = hostname.getElementsByTagName( "input" )[ 0 ];
         if ( checkbox.checked ) {
@@ -28,14 +28,10 @@ const removeBangs = async () => {
     let to_remove = [];
     
     const bangs = document.getElementById( "bang-list" );
-    const bang_template = bangs.children[ 0 ];
-
     for ( const bang of bangs.children ) {
         const checkbox = bang.getElementsByTagName( "input" )[ 0 ];
-        if ( checkbox.checked ) {
-            to_remove.push( bang );
-            checkbox.checked = false;
-        } else saved_bangs[ bang.id ] = bang.getElementsByTagName( "span" )[ 1 ].innerText;
+        if ( checkbox.checked ) to_remove.push( bang );
+        else saved_bangs[ bang.id ] = bang.getElementsByTagName( "span" )[ 1 ].innerText;
     }
 
     // remove selected bangs
@@ -47,7 +43,7 @@ const removeBangs = async () => {
     await browser.storage.local.set( { bangs: new_bangs } );
 
     document.getElementById( "bangs-rem" ).disabled = true;
-    loadBangs( new_bangs, bang_template );
+    loadBangs( new_bangs, bangs.children[ 0 ] );
 };
 
 /** save data from hostnames list */
@@ -55,17 +51,14 @@ const saveHostnames = async () => {
     let saved_hostnames = [];
 
     const hostnames = document.getElementsByClassName( "hostname-entry" );
-    for ( let element of hostnames ) {
-        const input = element.getElementsByTagName( "span" );
-        if ( input[ 0 ].innerText === "%hostname%" ) {
-            input[ 0 ].contentEditable = false;
-            continue;
-        }
+    for ( const hostname of hostnames ) {
+        const input = hostname.getElementsByTagName( "span" );
+        if ( input[ 0 ].innerText === "%hostname%" ) continue;
 
         if ( input[0].isContentEditable ) {
             saved_hostnames.push( input[0].innerText );
             input[0].contentEditable = false;
-        } else saved_hostnames.push( element.id );
+        } else saved_hostnames.push( hostname.id );
     }
 
     await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
@@ -81,16 +74,10 @@ const saveBangs = async () => {
     const bangs = document.getElementsByClassName( "bang-entry" );
     for ( const bang of bangs ) {
         const input = bang.getElementsByTagName( "span" );
-        if ( input[ 0 ].innerText === "%bang%" && input[ 1 ].innerText === "%bang_url%" ) {
-            input[0].contentEditable = false;
-            input[1].contentEditable = false;
-            continue;
-        };
+        if ( input[ 0 ].innerText === "%bang%" && input[ 1 ].innerText === "%bang_url%" ) continue;
         
         if ( input[ 0 ].isContentEditable || input[ 1 ].isContentEditable ) {
             saved_bangs[ input[0].innerText ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
-            input[0].contentEditable = false;
-            input[1].contentEditable = false;
         } else saved_bangs[ bang.id ] = input[1].innerText;
     }
 
@@ -131,6 +118,10 @@ const loadHostnames = ( hostnames, template ) => {
     // stop if template is missing
     if ( !template ) return;
 
+    // untick checkox and disable editing
+    template.getElementsByTagName( "input" )[ 0 ].checked = false;
+    template.getElementsByTagName( "span" )[ 0 ].contentEditable = false;
+
     // remove all current hostname entries
     document.getElementById( "hostname-list" ).replaceChildren();
 
@@ -151,12 +142,20 @@ const loadHostnames = ( hostnames, template ) => {
             document.getElementById( "hostnames-save" ).disabled = false;
         } );
     }
+
+    document.getElementById( "hostnames-rem" ).disabled = true;
+    document.getElementById( "hostnames-save" ).disabled = true;
 };
 
 /** show data inside bang list */
 const loadBangs = ( bangs, template ) => {
     // stop if template is missing
     if ( !template ) return;
+
+    // untick checkbox and disable editing
+    template.getElementsByTagName( "input" )[ 0 ].checked = false;
+    template.getElementsByTagName( "span" )[ 0 ].contentEditable = false;
+    template.getElementsByTagName( "span" )[ 1 ].contentEditable = false;
 
     // remove all current bang entries
     document.getElementById( "bang-list" ).replaceChildren();
@@ -184,6 +183,9 @@ const loadBangs = ( bangs, template ) => {
             document.getElementById( "bangs-save" ).disabled = false;
         } );
     }
+
+    document.getElementById( "bangs-rem" ).disabled = true;
+    document.getElementById( "bangs-save" ).disabled = true;
 };
 
 /** show data inside respective lists */
