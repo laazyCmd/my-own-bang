@@ -8,10 +8,7 @@ const removeHostnames = async () => {
         const checkbox = hostname.getElementsByTagName( "input" )[ 0 ];
         if ( checkbox.checked ) {
             to_remove.push( hostname );
-            continue;
-        }
-
-        saved_hostnames.push( hostname );
+        } else saved_hostnames.push( hostname );
     }
 
     // remove selected hostnames
@@ -28,29 +25,29 @@ const removeHostnames = async () => {
 /** remove data from a bang list */
 const removeBangs = async () => {
     let saved_bangs = {};
-    await browser.storage.local.get( [ "bangs" ] )
-    .then( data => saved_bangs = data.bangs );
-
+    let to_remove = [];
+    
     const bangs = document.getElementById( "bang-list" );
-    const to_remove = [];
+    const bang_template = bangs.children[ 0 ];
+
     for ( const bang of bangs.children ) {
         const checkbox = bang.getElementsByTagName( "input" )[ 0 ];
         if ( checkbox.checked ) {
-            delete saved_bangs[ bang.id ];
             to_remove.push( bang );
-        }
+            checkbox.checked = false;
+        } else saved_bangs[ bang.id ] = bang.getElementsByTagName( "span" )[ 1 ].innerText;
     }
 
     // remove selected bangs
     for ( const removed of to_remove ) {
         bangs.removeChild( removed );
     }
-
+    
     const new_bangs = Object.fromEntries( Object.entries( saved_bangs ).sort() );
     await browser.storage.local.set( { bangs: new_bangs } );
 
     document.getElementById( "bangs-rem" ).disabled = true;
-    loadBangs( new_bangs, bangs.children[ 0 ] );
+    loadBangs( new_bangs, bang_template );
 };
 
 /** save data from hostnames list */
@@ -64,13 +61,11 @@ const saveHostnames = async () => {
             input[ 0 ].contentEditable = false;
             continue;
         }
+
         if ( input[0].isContentEditable ) {
             saved_hostnames.push( input[0].innerText );
             input[0].contentEditable = false;
-            continue;
-        }
-
-        saved_hostnames.push( element.id );
+        } else saved_hostnames.push( element.id );
     }
 
     await browser.storage.local.set( { hostnames: saved_hostnames.sort() } );
@@ -82,23 +77,21 @@ const saveHostnames = async () => {
 /** save data from bangs list */
 const saveBangs = async () => {
     let saved_bangs = {};
-    await browser.storage.local.get( [ "bangs" ] )
-    .then( data => saved_bangs = data.bangs );
 
     const bangs = document.getElementsByClassName( "bang-entry" );
-    for ( let element of bangs ) {
-        const input = element.getElementsByTagName( "span" );
+    for ( const bang of bangs ) {
+        const input = bang.getElementsByTagName( "span" );
         if ( input[ 0 ].innerText === "%bang%" && input[ 1 ].innerText === "%bang_url%" ) {
             input[0].contentEditable = false;
             input[1].contentEditable = false;
             continue;
         };
+        
         if ( input[ 0 ].isContentEditable || input[ 1 ].isContentEditable ) {
-            delete saved_bangs[ element.id ];
             saved_bangs[ input[0].innerText ] = input[1].innerText || "https://piped.kavin.rocks/watch?v=dQw4w9WgXcQ";
             input[0].contentEditable = false;
             input[1].contentEditable = false;
-        }
+        } else saved_bangs[ bang.id ] = input[1].innerText;
     }
 
     const new_bangs = Object.fromEntries( Object.entries( saved_bangs ).sort() );
