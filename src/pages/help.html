@@ -13,6 +13,49 @@
                 <div id="help-hr"></div>
             </header>
         </div>
+        <div id="help-sections">
+            <details>
+                <summary>
+                    <h1>How to change hostname?</h1>
+                </summary>
+                <section>
+                    <p>
+                        The hostname is basically a URL address.
+                    </p>
+                    <p>
+                        From your preferred hostname, take the highlighted part of this example URL: https://<span>duckduckgo.com</span>/, or you can include the domain prefix: https://<span>www.google.com</span>/.
+                    </p>
+                    <p>
+                        This is required, for this is where the extension will read the search parameters, like the https://duckduckgo.com/?q=<span>!piped+example+query</span>.
+                    </p>
+                </section>
+            </details>
+            <details>
+                <summary>
+                    <h1>How to add bangs?</h1>
+                </summary>
+                <section>
+                    <p>
+                        Adding bangs require a bang name and an address for redirection.
+                    </p>
+                    <p>
+                        1. Click on the "<b>Add</b>" button, and a new, temporary card will be shown to you.
+                    </p>
+                    <p>
+                        2. After clicking the button, you are required to add a name for the bang.
+                    </p>
+                    <p>
+                        3.1 Under the name, you are required to add the shortcut address, you can also add a <span>{{s}}</span> to the address if you wish a string be replaced by query parameters. This shortcut will be used to redirect you.
+                    </p>
+                    <p>
+                        3.2 If you have query parameters included, the extension will replace a string in the shortcut address through <span>{{s}}</span>: If you type <b>!piped example query</b>, the address <span>https://piped.kavin.rocks/results?search_query={{s}}</span> will become <span>https://piped.kavin.rocks/results?search_query=example query</span> instead.
+                    </p>
+                    <p>
+                        This will be the format of your bang: !<span>[BANG NAME]</span> <span>[QUERY PARAMETERS]</span>.
+                    </p>
+                </section>
+            </details>
+        </div>
     </body>
 
     <style>
@@ -40,6 +83,47 @@
 
         #help-hr {
             border: 0.5px solid #838383;
+        }
+
+        #help-sections {
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+            list-style-type: none;
+        }
+
+        #help-sections > details > summary {
+            padding: 10px 1rem;
+            display: flex;
+            border-left: 1rem solid #de5833;
+            border-radius: 0.25rem;
+            background-color: #c04c2d;
+            cursor: pointer;
+        }
+
+        #help-sections > details > summary h1 {
+            font-size: 1.25rem; /* 20px */
+            line-height: 1.75rem; /* 28px */
+        }
+
+        #help-sections > details > section {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+            margin-top: 5px;
+            margin-left: 1rem;
+            padding: 1rem;
+            border-radius: 0.125rem; /* 2px */
+            background-color: #c04d2d31;
+        }
+
+        #help-sections > details > section span {
+            background-color: #c04c2d;
+            padding: 2px 3px;
+        }
+
+        #help-sections > details > section b {
+            font-weight: 600;
         }
     </style>
 </html>
