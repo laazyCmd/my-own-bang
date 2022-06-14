@@ -89,46 +89,20 @@
 
         #settings {
             width: 100%;
-            height: 100%;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
 
-        /** Small screens */
-        @media (min-width: 640px) {
-            #page {
-            margin-left: 5rem;
-            margin-right: 5rem;
+        #page {
             height: 100%;
+            width: 983px;
+            margin: 0 auto 2rem auto;
             margin-bottom: 2rem;
             display: flex;
             flex-direction: column;
             row-gap: 3.5rem;
-        }
-
-        /** Medium screens */
-        @media (min-width: 768px) {
-            #page {
-            margin-left: 15rem;
-            margin-right: 15rem;
-            height: 100%;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            row-gap: 3.5rem;
-        }
-
-
-        /** Large screens */
-        @media (min-width: 1024px) {
-            #page {
-            margin-left: 25rem;
-            margin-right: 25rem;
-            height: 100%;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            row-gap: 3.5rem;
+            flex: 1;
         }
     </style>
 </html>
