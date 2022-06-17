@@ -4,7 +4,6 @@
 </header>
 
 ## 👋 Introduction
----
 An extension that allows you to create your own shortcuts to take your search results to other sites, without being dependent on a single search engine. 
 
 This is based on DuckDuckGo's bang feature, I originally made this to compliment the said feature but I expanded on it instead.
@@ -16,8 +15,6 @@ Unfortunately, I have decided not to release this on Firefox's addon store becau
 &nbsp;
 
 ## 🔧 Installation
----
-
 ### **Firefox**
 You can find the XPI file for this extension [at the Releases section](https://github.com/laazyCmd/my-own-bang/releases), along with the zipped source code and hashes.
 
