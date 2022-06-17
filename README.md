@@ -1,6 +1,6 @@
 <div align="center">
 	<img src="src/assets/icon.png" alt="My Own Bang" width="98" height="78" />
-	<h2><b>My Own Bang</b></h2>
+	<p><b>My Own Bang</b></p>
 </div>
 
 ## 👋 Introduction
