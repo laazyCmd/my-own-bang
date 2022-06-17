@@ -2,6 +2,159 @@
 <html>
     <head>
         <meta charset="utf-8"/>
+
+        <style>
+            #hostnames-list,
+            #bangs-list {
+                list-style-type: none;
+            }
+    
+            #hostnames-list summary,
+            #bangs-list summary {
+                padding-top: 10px;
+                cursor: pointer;
+            }
+    
+            #hostnames-list summary:hover,
+            #bangs-list summary:hover {
+                background-color: #83838311;
+            }
+    
+            #hostname-list,
+            #bang-list {
+                display: flex;
+                flex-direction: column;
+                margin: 1rem 0;
+                row-gap: 8px;
+            }
+            
+            .hostname-entry,
+            .bang-entry {
+                padding: 0 1rem;
+                display: flex;
+                border-left: 1rem solid #de5833;
+                border-radius: 0.25rem;
+                background-color: #c04c2d;
+                align-items: center;
+            }
+    
+            .hostname-entry input[type="checkbox"],
+            .bang-entry input[type="checkbox"] {
+                width: 1.25rem;
+                height: 1.25rem;
+                cursor: pointer;
+                background-color:white;
+                border-radius: 0.125rem; /* 2px */
+                display: flex;
+                justify-items: center;
+            }
+    
+            .hostname-entry input[type="checkbox"]:checked:before, 
+            .bang-entry input[type="checkbox"]:checked:before {
+                margin: auto;
+                color: black;
+                content: '✖';
+            }
+    
+            .hostname,
+            .bang {
+                width: 100%;
+                padding: 1rem 0;
+                margin: 0 1rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+    
+            [contenteditable="false"] {
+                cursor: pointer;
+            }
+    
+            [contenteditable="true"] {
+                padding-left: 5px;
+                padding-right: 5px;
+                color: black;
+                background-color: white;
+                border: 1px solid #d9d9d9;
+                border-radius: 8px;
+                display: inline-block;
+            }
+    
+            [contenteditable="false"] br,
+            [contenteditable="true"] br {
+                display: none;
+            }
+    
+            .bang-url {
+                font-size: 0.875rem; /* 14px */
+                line-height: 1.25rem; /* 20px */
+            }
+    
+            .summary-hr {
+                border: 0.5px solid #838383;
+            }
+    
+            .details-summary {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-left: 5%;
+                margin-right: 5%;
+                margin-bottom: 0.75rem;
+            }
+            
+            .details-summary > h1 {
+                font-weight: 600;
+                font-size: 1.5rem; /* 24px */
+                line-height: 2rem; /* 32px */
+            }
+    
+            .add-btn {
+                background-color: #006600;
+                padding: 5px 15px;
+                border-radius: 0.125rem;
+                cursor: pointer;
+            }
+    
+            .add-btn:hover {
+                background-color: #009900;
+            }
+    
+            .save-btn {
+                background-color: #cc6600;
+                padding: 5px 15px;
+                border-radius: 0.125rem;
+                cursor: pointer;
+                transition-duration: 300ms;
+            }
+    
+            .save-btn:hover {
+                background-color: #ff9900;
+            }
+    
+            .rem-btn {
+                background-color: #990000;
+                padding: 5px 15px;
+                border-radius: 0.125rem;
+                cursor: pointer;
+                transition-duration: 300ms;
+            }
+    
+            .rem-btn:hover {
+                background-color: #cc3300;
+            }
+    
+            .save-btn:disabled,
+            .rem-btn:disabled {
+                background-color: #666666;
+                color: #c9c9c9;
+            }
+            
+            .save-btn:disabled:hover,
+            .rem-btn:disabled:hover {
+                background-color: #838383;
+            }
+        </style>
     </head>
 
     <body id="index">
@@ -55,157 +208,4 @@
             </ul>
         </details>
     </body>
-
-    <style>
-        #hostnames-list,
-        #bangs-list {
-            list-style-type: none;
-        }
-
-        #hostnames-list summary,
-        #bangs-list summary {
-            padding-top: 10px;
-            cursor: pointer;
-        }
-
-        #hostnames-list summary:hover,
-        #bangs-list summary:hover {
-            background-color: #83838311;
-        }
-
-        #hostname-list,
-        #bang-list {
-            display: flex;
-            flex-direction: column;
-            margin: 1rem 0;
-            row-gap: 8px;
-        }
-        
-        .hostname-entry,
-        .bang-entry {
-            padding: 0 1rem;
-            display: flex;
-            border-left: 1rem solid #de5833;
-            border-radius: 0.25rem;
-            background-color: #c04c2d;
-            align-items: center;
-        }
-
-        .hostname-entry input[type="checkbox"],
-        .bang-entry input[type="checkbox"] {
-            width: 1.25rem;
-            height: 1.25rem;
-            cursor: pointer;
-            background-color:white;
-            border-radius: 0.125rem; /* 2px */
-            display: flex;
-            justify-items: center;
-        }
-
-        .hostname-entry input[type="checkbox"]:checked:before, 
-        .bang-entry input[type="checkbox"]:checked:before {
-            margin: auto;
-            color: black;
-            content: '✖';
-        }
-
-        .hostname,
-        .bang {
-            width: 100%;
-            padding: 1rem 0;
-            margin: 0 1rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        [contenteditable="false"] {
-            cursor: pointer;
-        }
-
-        [contenteditable="true"] {
-            padding-left: 5px;
-            padding-right: 5px;
-            color: black;
-            background-color: white;
-            border: 1px solid #d9d9d9;
-            border-radius: 8px;
-            display: inline-block;
-        }
-
-        [contenteditable="false"] br,
-        [contenteditable="true"] br {
-            display: none;
-        }
-
-        .bang-url {
-            font-size: 0.875rem; /* 14px */
-            line-height: 1.25rem; /* 20px */
-        }
-
-        .summary-hr {
-            border: 0.5px solid #838383;
-        }
-
-        .details-summary {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-left: 5%;
-            margin-right: 5%;
-            margin-bottom: 0.75rem;
-        }
-        
-        .details-summary > h1 {
-            font-weight: 600;
-            font-size: 1.5rem; /* 24px */
-            line-height: 2rem; /* 32px */
-        }
-
-        .add-btn {
-            background-color: #006600;
-            padding: 5px 15px;
-            border-radius: 0.125rem;
-            cursor: pointer;
-        }
-
-        .add-btn:hover {
-            background-color: #009900;
-        }
-
-        .save-btn {
-            background-color: #cc6600;
-            padding: 5px 15px;
-            border-radius: 0.125rem;
-            cursor: pointer;
-            transition-duration: 300ms;
-        }
-
-        .save-btn:hover {
-            background-color: #ff9900;
-        }
-
-        .rem-btn {
-            background-color: #990000;
-            padding: 5px 15px;
-            border-radius: 0.125rem;
-            cursor: pointer;
-            transition-duration: 300ms;
-        }
-
-        .rem-btn:hover {
-            background-color: #cc3300;
-        }
-
-        .save-btn:disabled,
-        .rem-btn:disabled {
-            background-color: #666666;
-            color: #c9c9c9;
-        }
-        
-        .save-btn:disabled:hover,
-        .rem-btn:disabled:hover {
-            background-color: #838383;
-        }
-    </style>
 </html>

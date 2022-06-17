@@ -6,6 +6,81 @@
         <link rel="stylesheet" href="reset.css"/>
         <title>Your Own Bang!</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <style>
+            html {
+                width: 100%;
+                height: 100%;
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: #36393f;
+                color: white;
+            }
+    
+            nav {
+                margin-bottom: 2.25rem;
+                background-color: #40444b;
+                padding: 0 1rem;
+                align-items: center;
+            }
+    
+            
+            nav div {
+                display: flex;
+                align-items: center;
+                position: relative;
+            }
+    
+            nav div > header img {
+                padding-top: 6px;
+            }
+    
+            nav div > section {
+                display: flex;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                justify-content: center;
+            }
+    
+            nav div > section button {
+                cursor: pointer;
+                padding: 1rem 1.25rem;
+                border-bottom: 3px solid #40444b;
+            }
+    
+            nav div > section button:hover {
+                border-bottom: 2.75px solid #838383;
+                background-color: #83838323;
+            }
+    
+            footer {
+                padding: 1.5rem 0;
+                text-align: center;
+            }
+    
+            footer p {
+                font-size: 0.875rem; /* 14px */
+                line-height: 1.25rem; /* 20px */
+            }
+    
+            #settings {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+    
+            #page {
+                height: 100%;
+                width: 983px;
+                margin: 0 auto 2rem auto;
+                margin-bottom: 2rem;
+                display: flex;
+                flex-direction: column;
+                row-gap: 3.5rem;
+                flex: 1;
+            }
+        </style>
     </head>
 
     <body id="settings">
@@ -30,79 +105,4 @@
 
         <script src="settings.js"></script>
     </body>
-
-    <style>
-        html {
-            width: 100%;
-            height: 100%;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #36393f;
-            color: white;
-        }
-
-        nav {
-            margin-bottom: 2.25rem;
-            background-color: #40444b;
-            padding: 0 1rem;
-            align-items: center;
-        }
-
-        
-        nav div {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        nav div > header img {
-            padding-top: 6px;
-        }
-
-        nav div > section {
-            display: flex;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            justify-content: center;
-        }
-
-        nav div > section button {
-            cursor: pointer;
-            padding: 1rem 1.25rem;
-            border-bottom: 3px solid #40444b;
-        }
-
-        nav div > section button:hover {
-            border-bottom: 2.75px solid #838383;
-            background-color: #83838323;
-        }
-
-        footer {
-            padding: 1.5rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            font-size: 0.875rem; /* 14px */
-            line-height: 1.25rem; /* 20px */
-        }
-
-        #settings {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        #page {
-            height: 100%;
-            width: 983px;
-            margin: 0 auto 2rem auto;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            row-gap: 3.5rem;
-            flex: 1;
-        }
-    </style>
 </html>

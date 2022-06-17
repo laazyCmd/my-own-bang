@@ -2,6 +2,50 @@
 <html>
     <head>
         <meta charset="utf-8"/>
+
+        <style>
+            #about-info {
+                display: flex;
+                flex-direction: column;
+                row-gap: 1rem;
+                padding-top: 10px
+            }
+    
+            #about-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-left: 5%;
+                margin-right: 5%;
+                margin-bottom: 0.75rem;
+            }
+            
+            #about-header > h1 {
+                font-weight: 600;
+                font-size: 1.5rem; /* 24px */
+                line-height: 2rem; /* 32px */
+            }
+    
+            #about-hr {
+                border: 0.5px solid #838383;
+            }
+    
+            #about-bangs {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                row-gap: 2rem;
+                margin-right: 16rem;
+            }
+    
+            #about-bangs a {
+                color: #0ea5e9;
+            }
+    
+            #about-bangs a:hover {
+                color: #0369a1;
+            }
+        </style>
     </head>
 
     <body id="about">
@@ -14,53 +58,9 @@
             </header>
             <section id="about-bangs">
                 <p>An extension that allows you to create your own shortcuts to take your search results to other sites, without being dependent on a single search engine.</p>
-                <a href="https://github.com/laazyCmd/my-own-bang">Changelogs</a>
+                <a href="https://github.com/laazyCmd/my-own-bang/releases">Changelogs</a>
                 <a href="https://github.com/laazyCmd/my-own-bang">Source code</a>
             </section>
         </div>
     </body>
-
-    <style>
-        #about-info {
-            display: flex;
-            flex-direction: column;
-            row-gap: 1rem;
-            padding-top: 10px
-        }
-
-        #about-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-left: 5%;
-            margin-right: 5%;
-            margin-bottom: 0.75rem;
-        }
-        
-        #about-header > h1 {
-            font-weight: 600;
-            font-size: 1.5rem; /* 24px */
-            line-height: 2rem; /* 32px */
-        }
-
-        #about-hr {
-            border: 0.5px solid #838383;
-        }
-
-        #about-bangs {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            row-gap: 2rem;
-            margin-right: 16rem;
-        }
-
-        #about-bangs a {
-            color: #0ea5e9;
-        }
-
-        #about-bangs a:hover {
-            color: #0369a1;
-        }
-    </style>
 </html>
