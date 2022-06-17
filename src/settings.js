@@ -104,14 +104,14 @@ const loadBangs = ( bangs, template ) => {
     for ( const [ name, address ] of Object.entries( bangs ) ) {
         const bang = template.cloneNode( true );
         bang.id = name;
-        bang.title = name;
 
         const details = bang.getElementsByTagName( "span" );
         const checkbox = bang.getElementsByTagName( "input" )[0];
 
         details[0].innerText = name;
         details[1].innerText = address;
-        details[ 1 ].title = address;
+        details[0].title = name;
+        details[1].title = address;
 
         document.getElementById( "bang-list" ).appendChild( bang );
 
