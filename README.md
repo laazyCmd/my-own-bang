@@ -22,7 +22,7 @@ Unfortunately, I have decided not to release this on Firefox's addon store becau
 You can find the XPI file for this extension [at the Releases section](https://github.com/laazyCmd/my-own-bang/releases), along with the zipped source code and hashes.
 
 ### **Chromium**
-Sorry, not available for chromium-based browsers! :(
+Sorry, not tested nor available for chromium-based browsers!
 
 &nbsp;
 
