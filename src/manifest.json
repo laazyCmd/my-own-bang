@@ -2,10 +2,17 @@
     "manifest_version": 2,
     "name": "My Own Bang!",
     "description": "Make your own custom bangs, only available for DuckDuckGo.",
-    "version": "1.0",
+    "version": "1.0.0",
 
     "icons": {
         "48": "assets/icon.png"
+    },
+
+    "browser_action": {
+        "default_icon": {
+            "38": "assets/icon_button.png"
+        },
+        "default_popup": "popup/toolbar_popup.html"
     },
 
     "background": {

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="../reset.css"/>
+
+        <style>
+            #popup {
+                background-color: #36393f;
+                color: white;
+                font-family: Helvetica, Arial, sans-serif;
+                margin: 8px;
+            }
+    
+            header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 3px;
+                margin-bottom: 8px;
+            }
+    
+            #settings {
+                padding: 10px 4rem 10px 1rem;
+                display: flex;
+                width: 100%;
+                border-left: 1rem solid #de5833;
+                border-radius: 0.25rem;
+                background-color: #c04c2d;
+                cursor: pointer;
+            }
+    
+            #settings > p {
+                font-weight: 600;
+                font-size: 1rem; /* 16px */
+                line-height: 1.5rem; /* 24px */
+            }
+        </style>
+    </head>
+
+    <body id="popup">
+        <header>
+            <figure>
+                <img src="../assets/icon.png" alt="LOGO :)" width="48" height="42">
+            </figure>
+        </header>
+        <button id="settings">
+            <p>Settings</p>
+        </button>
+
+        <script src="toolbar_popup.js"></script>
+    </body>
+</html>
