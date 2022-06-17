@@ -1,10 +1,10 @@
-<header>
+<header align="center">
 	<img src="src/assets/icon.png" alt="My Own Bang" width="98" height="78" />
-	<p>My Own Bang</p>
+	<h2><b>My Own Bang</b></h2>
 </header>
 
 ## 👋 Introduction
-An extension that allows you to create your own shortcuts to take your search results to other sites, without being dependent on a single search engine. 
+>An extension that allows you to create your own shortcuts to take your search results to other sites, without being dependent on a single search engine. 
 
 This is based on DuckDuckGo's bang feature, I originally made this to compliment the said feature but I expanded on it instead.
 
@@ -24,9 +24,3 @@ Sorry, not tested nor available for chromium-based browsers!
 &nbsp;
 
 ⛔ This **may not work on certain search engines**, such as Startpage or SearX, because the extension relies on query parameters from search engines' URL.
-
-
-<style>
-	header { display: flex; align-items: center; justify-content: center; column-gap: 1rem; margin-bottom: 1rem }
-	header > p { text-align: center; font-weight: 600; font-size: 1.25rem !important; line-height: 1rem }
-</style>
