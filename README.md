@@ -1,7 +1,7 @@
-<header align="center">
+<div align="center">
 	<img src="src/assets/icon.png" alt="My Own Bang" width="98" height="78" />
 	<h2><b>My Own Bang</b></h2>
-</header>
+</div>
 
 ## 👋 Introduction
 >An extension that allows you to create your own shortcuts to take your search results to other sites, without being dependent on a single search engine. 
