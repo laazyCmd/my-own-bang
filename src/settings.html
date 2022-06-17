@@ -72,13 +72,39 @@
     
             #page {
                 height: 100%;
-                width: 983px;
+                width: 600px;
                 margin: 0 auto 2rem auto;
                 margin-bottom: 2rem;
                 display: flex;
                 flex-direction: column;
                 row-gap: 3.5rem;
                 flex: 1;
+            }
+
+            @media (min-width: 768px) {
+                #page {
+                    height: 100%;
+                    width: 700px;
+                    margin: 0 auto 2rem auto;
+                    margin-bottom: 2rem;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 3.5rem;
+                    flex: 1;
+                }
+            }
+
+            @media (min-width: 1280px) {
+                #page {
+                    height: 100%;
+                    width: 983px;
+                    margin: 0 auto 2rem auto;
+                    margin-bottom: 2rem;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 3.5rem;
+                    flex: 1;
+                }
             }
         </style>
     </head>
